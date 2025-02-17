@@ -1,10 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const user = require('../models/user');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const dotenv = require('dotenv');
 const upload = require('../middlewares/multer');
+
+const user = require('../models/user');
+const machine = require('../models/machine');
+const crop = require('../models/crop');
+const animal = require('../models/animal');
+const field = require('../models/field');
 
 dotenv.config();
 
@@ -91,7 +96,7 @@ router.put('/editAccount/:id', upload.single('photo'),  async (req, res) => {
             state,
             district,
             village
-        })
+        }, {new: true})
         res.status(200).json({message: "profile edited successfully"})
     } catch (error) {
         console.log("Internal Error : ", error.message);
@@ -103,6 +108,21 @@ router.put('/editAccount/:id', upload.single('photo'),  async (req, res) => {
 router.delete('/removeAccount', async (req, res) => {
     try {
         const userID = req.body.userID;
+        if (!userID) {
+            return res.status(400).json({ message: "User ID is required" });
+        }
+
+        const newUser = await user.findById(userID);
+        if (!newUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Removing the Items added by this user
+        await machine.deleteMany({userEmail: newUser.email});
+        await crop.deleteMany({userEmail: newUser.email});
+        await animal.deleteMany({userEmail: newUser.email});
+        await field.deleteMany({userEmail: newUser.email});
+
         await user.findByIdAndDelete(userID);
         res.status(200).json({message: "account removed successfully"})
     } catch (error) {

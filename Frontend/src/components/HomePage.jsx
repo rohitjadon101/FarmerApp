@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Cookies from 'universal-cookie';
 import data from '../Api/stateDistrict';
 import { useNavigate } from "react-router-dom";
-import ClipLoader from "react-spinners/ClipLoader"
+import ClipLoader from "react-spinners/ClipLoader";
 
 const cookies = new Cookies();
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -182,7 +182,7 @@ function HomePage() {
               loading={loading}
               size={50}
               aria-label="Loading Spinner"
-              data-testid="loader" 
+              data-testid="loader"
             />
           </div>
         ) : (

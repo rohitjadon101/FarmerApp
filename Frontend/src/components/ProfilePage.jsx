@@ -122,7 +122,7 @@ const ProfilePage = () => {
         Swal.fire({
             icon: 'error',
             title: 'Delete Account',
-            text: 'Are you sure you want to delete your account',
+            text: 'Are you sure you want to delete your account ? All of your Items will be deleted', 
             showCancelButton: true,
             confirmButtonText: 'Yes',
             cancelButtonText: 'Cancel',

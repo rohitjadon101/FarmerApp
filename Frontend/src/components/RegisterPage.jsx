@@ -3,6 +3,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import data from '../Api/stateDistrict';
 import { useNavigate } from 'react-router-dom';
+import ClipLoader from "react-spinners/ClipLoader";
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 function RegisterPage(){
@@ -41,6 +42,7 @@ function RegisterPage(){
         }).then(async (res) => {
             const result = await res.json();
             if(res.ok){
+                setLoading(false);
                 toast.success(result.message,{
                     onClose: () => {
                         navigate('/login')
@@ -58,6 +60,8 @@ function RegisterPage(){
             toast.error("Network Error",{autoClose: 1500, pauseOnHover: false, closeOnClick: true, position: 'bottom-right', theme: 'colored'})
         });
     };
+
+    const [loading, setLoading] = useState(false);
 
     return (
         <div className="bg-zinc-800 min-h-screen w-full text-white flex justify-center items-center py-4 sm:py-10">
@@ -108,7 +112,18 @@ function RegisterPage(){
                     <label htmlFor="place" className="py-2 mt-4">Village or Street</label>
                     <input type="text" id="place" name="village" value={formdata.village} onChange={handleChange} className="border-2 border-gray-500 bg-transparent outline-none text-white px-3 py-2 rounded-lg" />
 
-                    <button className="px-4 py-2 text-green-500 font-bold text-xl hover:text-green-600 rounded-md w-fit self-center mt-4">Save</button>
+                    <button className="px-4 py-2 text-green-500 font-bold text-xl hover:text-green-600 rounded-md w-fit self-center mt-4" onClick={() => setLoading(true)}>Save</button>
+                    {loading && (
+                    <div className="mt-2 flex justify-center items-center">
+                        <ClipLoader 
+                        color="#5ad356"
+                        loading={loading}
+                        size={30}
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
+                        />
+                    </div>
+                  )}
                 </form>
             </div>
         <ToastContainer />

@@ -72,8 +72,8 @@ function AddMachine(){
     };
 
     return (
-        <div className="bg-zinc-800 min-h-screen text-white flex justify-center items-center py-20">
-            <div className="p-5 border-2 border-gray-400 rounded-lg lg:w-[40%]">
+        <div className="bg-zinc-800 min-h-screen text-white flex justify-center items-center py-4 sm:py-10">
+            <div className="p-5 border-2 border-gray-400 rounded-lg w-[80%] lg:w-[40%]">
                 <h1 className="font-extrabold text-[25px] text-gray-500 py-4">Add Machine</h1>
                 <form onSubmit={handleSubmit} className="flex flex-col">
 

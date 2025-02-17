@@ -268,16 +268,16 @@ router.delete('/removeAddedItems/:itemID', async (req, res) => {
         foundUser.addedItem = foundUser.addedItem.filter((item) => item._id !== itemID);
         await foundUser.save();
 
-        if(itemDomain == "machine"){
+        if(itemDomain === "machine"){
             await machine.findByIdAndDelete(itemID);
         }
-        else if(itemDomain == "crop"){
+        else if(itemDomain === "crop"){
             await crop.findByIdAndDelete(itemID);
         }
-        else if(itemDomain == "animal"){
+        else if(itemDomain === "animal"){
             await animal.findByIdAndDelete(itemID);
         }
-        else if(itemDomain == "field"){
+        else if(itemDomain === "field"){
             await field.findByIdAndDelete(itemID);
         }
         res.status(200).json({message: "Your Item Removed"});

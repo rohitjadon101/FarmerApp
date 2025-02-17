@@ -3,6 +3,7 @@ import Cookies from 'universal-cookie';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
 const cookies = new Cookies();
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -29,6 +30,7 @@ function LoginPage(){
           if(data.token){
             cookies.set('token', data.token);
             cookies.set('user', data.foundUser);
+            setLoading(false);
             toast.success("login succcessFully",{
               onClose: () => {
                 navigate('/')
@@ -61,6 +63,8 @@ function LoginPage(){
         }
     };
 
+    const [loading, setLoading] = useState(false);
+
     return (
       <div className="min-h-screen bg-zinc-900 flex justify-center items-center">
           <div className="sm:w-1/3 px-2 lg:px-4 py-10 border-2 border-zinc-600 rounded-lg overflow-hidden flex flex-col justify-center">
@@ -70,9 +74,20 @@ function LoginPage(){
                   <input type="password" name="password" value={formdata.password} onChange={handleChange} placeholder="password" className="px-4 py-2 bg-zinc-800 rounded-lg outline-none mt-2"/>
                   <p className="mt-2 text-gray-400">Don't have an account ? <span className="text-blue-500 underline cursor-pointer hover:text-blue-600" onClick={() => navigate('/register')}>Create Account</span></p>
                   <div className="flex gap-4 mt-10">
-                      <button className="px-4 py-1 bg-blue-600 rounded-lg">Login</button>
+                      <button className="px-4 py-1 bg-blue-600 rounded-lg" onClick={() => setLoading(true)}>Login</button>
                       <a href="/" className="px-4 py-1 bg-zinc-600 rounded-lg">Back</a>
                   </div>
+                  {loading && (
+                    <div className="mt-2 flex justify-center items-center">
+                    <ClipLoader 
+                      color="#5ad356"
+                      loading={loading}
+                      size={30}
+                      aria-label="Loading Spinner"
+                      data-testid="loader"
+                    />
+                  </div>
+                  )}
               </form>
           </div>
           <ToastContainer />
