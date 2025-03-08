@@ -12,7 +12,7 @@ function ShowItem(){
     const navigate = useNavigate();
 
     if(!cookies.get('token')){
-      navigate('/login')
+      navigate('/login');
       return;
     }
     const user = cookies.get('user');
@@ -21,40 +21,33 @@ function ShowItem(){
 
     const [item, setItem] = useState();
     useEffect(() => {
-        try {
-            fetch(`${backendUrl}/showItem/${category}/${itemId}`)
-            .then(async (res) => {
-                if(res.ok){
-                  const data = await res.json();
-                  setItem(data);
-                }
-            else{
-                const data = await res.json();
-                toast.error("Error Occured!", {
-                autoClose: 2000,
-                position: 'bottom-right',
-                closeOnClick: true,
-                pauseOnHover: false,
-                theme: 'colored'
-                })
+        if(category && itemId){
+          fetch(`${backendUrl}/showItem/${category}/${itemId}`)
+          .then(async (res) => {
+            if(res.ok){
+              const data = await res.json();
+              setItem(data);
             }
+            else{
+              const data = await res.json();
+              toast.error("Error Occured!", {
+              autoClose: 2000,
+              position: 'bottom-right',
+              closeOnClick: true,
+              pauseOnHover: false,
+              theme: 'colored'
+              })
+            }
+          })
+          .catch((err) => {
+            toast.error("something went wrong:", {
+              autoClose: 2000,
+              position: 'bottom-right',
+              closeOnClick: true,
+              pauseOnHover: false,
+              theme: 'colored'
             })
-            .catch((err) => {
-                toast.error("something went wrong:", {
-                    autoClose: 2000,
-                    position: 'bottom-right',
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    theme: 'colored'
-            })})
-        } catch (error) {
-            toast.error("Server Error:", {
-            autoClose: 2000,
-            position: 'bottom-right',
-            closeOnClick: true,
-            pauseOnHover: false,
-            theme: 'colored'
-            })
+          })
         }
     },[category,itemId])
 
