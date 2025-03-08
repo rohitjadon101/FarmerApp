@@ -4,6 +4,7 @@ import data from '../Api/stateDistrict';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
 const cookies = new Cookies();
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -42,6 +43,7 @@ function AddField(){
             body: formData
         }).then(async (res) => {
             const data = await res.json();
+            setLoading(false);
             if(res.ok){
                 toast.success(data.message,{
                     onClose: () => {
@@ -63,6 +65,7 @@ function AddField(){
                 })
             }
         }).catch((err) => {
+            setLoading(false);
             toast.error("Network Error",{
                 autoClose: 2000,
                 position: 'bottom-right',
@@ -72,6 +75,8 @@ function AddField(){
             })
         });
     };
+
+    const [loading, setLoading] = useState(false);
 
     return (
         <div className="bg-zinc-800 min-h-screen text-white flex justify-center items-center py-4 sm:py-10">
@@ -134,7 +139,18 @@ function AddField(){
                     <label htmlFor="place" className="py-2 mt-4">Village or Street</label>
                     <input type="text" id="place" name="place" value={formdata.place} onChange={handleChange} className="border-2 border-gray-500 bg-transparent outline-none text-white px-3 py-2 rounded-lg" />
 
-                    <button className="px-4 py-2 text-green-500 font-bold text-xl hover:text-green-600 rounded-md w-fit self-center mt-4">Save</button>
+                    <button className="px-4 py-2 text-green-500 font-bold text-xl hover:text-green-600 rounded-md w-fit self-center mt-4" onClick={() => setLoading(true)}>Save</button>
+                    {loading && (
+                    <div className="mt-2 flex justify-center items-center">
+                        <ClipLoader 
+                        color="#5ad356"
+                        loading={loading}
+                        size={30}
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
+                        />
+                    </div>
+                    )}
                 </form>
             </div>
         <ToastContainer />

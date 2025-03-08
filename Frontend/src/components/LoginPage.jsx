@@ -26,11 +26,11 @@ function LoginPage(){
             body: JSON.stringify(formdata)
           })
           const data = await res.json();
+          setLoading(false);
 
           if(data.token){
             cookies.set('token', data.token);
             cookies.set('user', data.foundUser);
-            setLoading(false);
             toast.success("login succcessFully",{
               onClose: () => {
                 navigate('/')
@@ -53,6 +53,7 @@ function LoginPage(){
           }
 
         } catch (error) {
+          setLoading(false);
           toast.error(`${data.message}`, {
             autoClose: 1500,
             position: 'top-right',

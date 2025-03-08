@@ -41,8 +41,8 @@ function RegisterPage(){
             body: formData
         }).then(async (res) => {
             const result = await res.json();
+            setLoading(false);
             if(res.ok){
-                setLoading(false);
                 toast.success(result.message,{
                     onClose: () => {
                         navigate('/login')
@@ -57,6 +57,7 @@ function RegisterPage(){
                 toast.warn(result.message,{autoClose: 1500, pauseOnHover: false, closeOnClick: true, position: 'bottom-right', theme: 'colored'})
             }
         }).catch((err) => {
+            setLoading(false);
             toast.error("Network Error",{autoClose: 1500, pauseOnHover: false, closeOnClick: true, position: 'bottom-right', theme: 'colored'})
         });
     };
