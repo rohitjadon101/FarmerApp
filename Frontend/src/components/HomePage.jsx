@@ -188,7 +188,7 @@ function HomePage() {
         ) : (
           <section className="flex flex-col items-center py-2 lg:py-10 gap-8">
             {filteredItems.length > 0 ? (
-              filteredItems.map((item) => (
+              [...filteredItems].reverse().map((item) => (
                 <div key={item._id} className="border border-gray-500 rounded-lg w-[90%] lg:w-[40%] p-4 sm:p-6 flex flex-col bg-gray-800 hover:shadow-lg transition">
 
                   {/* Seller Info */}

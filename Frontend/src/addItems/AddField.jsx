@@ -55,6 +55,8 @@ function AddField(){
                     pauseOnHover: false,
                     theme: 'colored'
                 })
+                // Reset the form fields
+                setFormdata({measure: '', area: '', description: '', price: '', perArea: '', photo: '', state: '', district: '', place: '' });
             }else{
                 toast.error(data.message,{
                     autoClose: 2000,

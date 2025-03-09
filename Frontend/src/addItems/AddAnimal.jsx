@@ -53,6 +53,8 @@ function AddAnimal(){
                     pauseOnHover: false,
                     theme: 'colored'
                 })
+                // Reset the form fields
+                setFormdata({animalCategory: '', description: '', price: '', photo: '', state: '', district: '', place: ''});
             }else{
                 toast.error(data.message,{
                     autoClose: 2000,

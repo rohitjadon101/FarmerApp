@@ -53,6 +53,8 @@ function AddMachine(){
                     pauseOnHover: false,
                     theme: 'colored'
                 })
+                // Reset the form fields
+                setFormdata({ name: '', description: '', price: '', machineCategory: '', photo: '', state: '', district: '', place: '' });
             }else{
                 toast.error(data.message,{
                     autoClose: 2000,
