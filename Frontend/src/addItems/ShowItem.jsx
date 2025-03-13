@@ -11,11 +11,12 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
 function ShowItem(){
     const navigate = useNavigate();
 
-    if(!cookies.get('token')){
+    const token = cookies.get('token');
+    const user = cookies.get('user') || null;
+    if(!token || !user){
       navigate('/login');
       return;
     }
-    const user = cookies.get('user');
     const itemId = cookies.get('itemId');
     const category = cookies.get('category');
 
