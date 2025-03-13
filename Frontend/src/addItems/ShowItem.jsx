@@ -13,10 +13,12 @@ function ShowItem(){
 
     const token = cookies.get('token');
     const user = cookies.get('user') || null;
-    if(!token || !user){
-      navigate('/login');
-      return;
-    }
+    useEffect(() => {
+      if(!token){
+        navigate('/login');
+        return;
+      }
+    }, [token]);
     const itemId = cookies.get('itemId');
     const category = cookies.get('category');
 
