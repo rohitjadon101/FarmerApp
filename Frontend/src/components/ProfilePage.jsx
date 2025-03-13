@@ -175,7 +175,7 @@ const ProfilePage = () => {
                 {/* Sidebar Menu */}
                 {menuOpen && (
                 <div className="absolute top-12 left-4 bg-gray-800 p-2 rounded-md border border-white">
-                    {/* <button className="block w-full text-left px-4 py-1 font-bold hover:bg-gray-700" onClick={() => navigate('/editAccount', {state: {from: '/profile'}})}>Edit</button> */}
+                    <button className="block w-full text-left px-4 py-1 font-bold hover:bg-gray-700" onClick={() => navigate('/editAccount', {state: {from: '/profile'}})}>Edit</button>
                     <button className="block w-full text-left px-4 py-1 font-bold hover:bg-gray-700" onClick={() => handleDelete()}>Delete</button>
                     <button className="block w-full text-left px-4 py-1 text-red-500 font-bold hover:underline" onClick={handleLogout}>Logout</button>
                 </div>
