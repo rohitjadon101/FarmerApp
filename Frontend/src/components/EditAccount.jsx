@@ -71,7 +71,7 @@ function EditAccount(){
         }).then(async (res) => {
             const result = await res.json();
             if(res.ok){
-                toast.success(result.message,{
+                toast.success("Account edited successfully!",{
                     onClose: () => {
                         navigate('/profile')
                     },

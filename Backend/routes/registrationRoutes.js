@@ -88,7 +88,7 @@ router.put('/editAccount/:id', upload.single('photo'),  async (req, res) => {
         const {name, email, contact, state, district, village} = req.body;
         const photo = req.file? req.file.path : '';
 
-        await user.findByIdAndUpdate(userID,{
+        const updatedUser = await user.findByIdAndUpdate(userID,{
             name,
             email,
             contact,
@@ -97,7 +97,7 @@ router.put('/editAccount/:id', upload.single('photo'),  async (req, res) => {
             district,
             village
         }, {new: true})
-        res.status(200).json({message: "profile edited successfully"})
+        res.status(200).json(updatedUser);
     } catch (error) {
         console.log("Internal Error : ", error.message);
         res.status(500).json({message: "Server Error"})

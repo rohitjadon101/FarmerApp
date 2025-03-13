@@ -250,7 +250,7 @@ router.get('/userItems/:userID', async (req, res) => {
 router.post('/removeFromCart/:itemID', async (req, res) => {
     try {
         const foundUser = await user.findById(req.body.userID);
-        foundUser.cart = foundUser.cart.filter((item) => item._id !== req.params.itemID);
+        foundUser.cart = foundUser.cart.filter((item) => item._id.toString() !== req.params.itemID);
         await foundUser.save();
         res.status(200).json({message: "Item removed from Cart"});
     } catch (error) {
@@ -265,7 +265,7 @@ router.delete('/removeAddedItems/:itemID', async (req, res) => {
         const itemID = req.params.itemID;
 
         const foundUser = await user.findById(userID);
-        foundUser.addedItem = foundUser.addedItem.filter((item) => item._id !== itemID);
+        foundUser.addedItem = foundUser.addedItem.filter((item) => item._id.toString() !== itemID);
         await foundUser.save();
 
         if(itemDomain === "machine"){
