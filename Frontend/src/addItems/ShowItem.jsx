@@ -19,7 +19,7 @@ function ShowItem(){
         return;
       }
     }, [token]);
-    const itemId = cookies.get('itemId');
+    const itemId = cookies.get('itemId') || null;
     const category = cookies.get('category');
 
     const [item, setItem] = useState();
@@ -50,6 +50,15 @@ function ShowItem(){
               pauseOnHover: false,
               theme: 'colored'
             })
+          })
+        }
+        else{
+          toast.info("Item is no longer available", {
+            autoClose: 2000,
+            position: 'bottom-right',
+            closeOnClick: true,
+            pauseOnHover: false,
+            theme: 'colored'
           })
         }
     },[category,itemId])
@@ -108,6 +117,7 @@ function ShowItem(){
                   <div>
                     <h1 className="font-bold text-xl text-gray-300">{item.userName}</h1>
                     <p className="text-sm text-gray-400">{item.userAddress}</p>
+                    <div className="text-[12px] text-gray-200 font-bold">Added : {new Date(parseInt(item._id.substring(0,8),16)*1000).toLocaleDateString()}</div>
                   </div>
                 </div>
                 <hr className="my-4 border-gray-600" />
@@ -125,6 +135,7 @@ function ShowItem(){
                     <div className="border-2 border-gray-400 rounded-md my-2">
                       <p className="font-bold text-green-500 px-4 py-2">{item.price}</p>
                     </div>
+                    {item.quantity && (<div className="font-bold text-gray-500">Quantity : <span className="text-green-500">{item.quantity}</span></div>)}
                     <p className="text-gray-200 "><span className="text-gray-400 font-bold">Address : {item.place}, {item.district}, {item.state}</span></p>
                     <h3 className="text-lg font-bold shadow-md text-gray-300 pt-5">Contact Information</h3>
                     <p className="text-gray-500 font-semibold pt-2">Mobile no. : <span className="text-gray-400">{item.userContact}</span></p>

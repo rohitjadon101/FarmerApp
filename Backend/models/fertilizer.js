@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 
-const fieldSchema = mongoose.Schema({
-    fieldCategory: String,
+const fertilizerSchema = mongoose.Schema({
     firstField: String,
     description: String,
     price: String,
+    quantity: String,
+    category: String,
     image: String,
     state: String,
     district: String,
@@ -17,4 +18,4 @@ const fieldSchema = mongoose.Schema({
     domain: String,
 })
 
-module.exports = mongoose.model('field', fieldSchema);
+module.exports = mongoose.model('fertilizer', fertilizerSchema);

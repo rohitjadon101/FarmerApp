@@ -8,7 +8,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 const cookies = new Cookies();
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-function AddField(){
+function AddFruit(){
     const navigate = useNavigate();
 
     if(!cookies.get('token')){
@@ -17,7 +17,7 @@ function AddField(){
     }
     const user = cookies.get('user');
 
-    const [formdata, setFormdata] = useState({fieldCategory: '',measure: '', area: '', description: '', price: '', perArea: '', photo: '', state: '', district: '', place: '' })
+    const [formdata, setFormdata] = useState({fruitCategory: '',name: '', description: '', price: '', quantity: '', photo: '', state: '', district: '', place: ''})
     const handleChange = (e) => {
         if(e.target.type === 'file'){
             setFormdata({...formdata, [e.target.name]: e.target.files[0]})
@@ -26,10 +26,7 @@ function AddField(){
             setFormdata({...formdata, [e.target.name]: e.target.value})
         }
     }
-
-    const Measure = ["Bigha", "Acre", "Hectare"]
-    const PerArea = ["per Bigha", "per Acre", "per Hectare"]
-    const fieldCategories = ["For Sale", "For Rent"]
+    const fruitCategories = ["Apple", "Mango", "Banana", "Papaya", "Grapes", "Guava", "Other"]
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -39,7 +36,7 @@ function AddField(){
             formData.append(key, formdata[key])
         })
 
-        await fetch(`${backendUrl}/add/field/${user._id}`, {
+        await fetch(`${backendUrl}/add/fruit/${user._id}`, {
             method: 'POST',
             body: formData
         }).then(async (res) => {
@@ -48,7 +45,7 @@ function AddField(){
             if(res.ok){
                 toast.success(data.message,{
                     onClose: () => {
-                        navigate('/add/field');
+                        navigate('/add/fruit');
                     },
                     autoClose: 2000,
                     position: 'bottom-right',
@@ -57,7 +54,7 @@ function AddField(){
                     theme: 'colored'
                 })
                 // Reset the form fields
-                setFormdata({fieldCategory: '', measure: '', area: '', description: '', price: '', perArea: '', photo: '', state: '', district: '', place: '' });
+                setFormdata({fruitCategory: '',name: '', description: '', price: '', quantity: '', photo: '', state: '', district: '', place: ''});
             }else{
                 toast.error(data.message,{
                     autoClose: 2000,
@@ -84,43 +81,31 @@ function AddField(){
     return (
         <div className="bg-zinc-800 min-h-screen text-white flex justify-center items-center py-4 sm:py-10">
             <div className="p-5 border-2 border-gray-400 rounded-lg w-[80%] lg:w-[40%]">
-                <h1 className="font-extrabold text-[25px] text-gray-500 py-4">Add Field</h1>
+                <h1 className="font-extrabold text-[25px] text-gray-500 py-4">Add Fruit</h1>
                 <form onSubmit={handleSubmit} className="flex flex-col">
 
                     <label htmlFor="category" className="py-2 mt-4">Category <span className="text-red-500">*</span></label>
-                    <select name="fieldCategory" id="category" required value={formdata.fieldCategory} onChange={handleChange} className="px-3 py-2 bg-transparent text-white border-2 border-zinc-600 rounded-lg outline-none">
+                    <select name="fruitCategory" id="category" required value={formdata.fruitCategory} onChange={handleChange} className="px-3 py-2 bg-transparent text-white border-2 border-zinc-600 rounded-lg outline-none">
                         <option value="" className="text-black">Select--</option>
-                        {fieldCategories.map((m) => (
-                            <option key={m} value={m} className="px-4 py-1 text-black">{m}</option>
-                        ))}
-                    </select>
-                    
-                    <label htmlFor="measure" className="py-2">Area in <span className="text-red-500">*</span></label>
-                    <select name="measure" id="measure" required value={formdata.measure} onChange={handleChange} className="px-3 py-2 mt-2 bg-transparent text-white border-2 border-zinc-600 rounded-lg outline-none">
-                        <option value="" className="text-black">Select--</option>
-                        {Measure.map((m) => (
+                        {fruitCategories.map((m) => (
                             <option key={m} value={m} className="px-4 py-1 text-black">{m}</option>
                         ))}
                     </select>
 
-                    <label htmlFor="area" className="py-2">Area <span className="text-red-500">*</span></label>
-                    <input type="text" id="area" name="area" required placeholder="eg: 5" value={formdata.area} onChange={handleChange} className="border-2 border-gray-500 bg-transparent outline-none text-white px-3 py-2 rounded-lg" />
+                    <label htmlFor="name" className="py-2">Name of Fruit <span className="text-red-500">*</span></label>
+                    <input type="text" id="name" name="name" required placeholder="eg: Mango" value={formdata.name} onChange={handleChange} className="border-2 border-gray-500 bg-transparent outline-none text-white px-3 py-2 rounded-lg" />
 
                     <label htmlFor="description" className="py-2 mt-4">Description</label>
-                    <textarea id="description" name="description" placeholder="eg: Bore well is available" value={formdata.description} onChange={handleChange} className="border-2 border-gray-500 bg-transparent outline-none text-white px-3 py-2 rounded-lg"></textarea>
+                    <textarea id="description" name="description" placeholder="eg: Good Quality" value={formdata.description} onChange={handleChange} className="border-2 border-gray-500 bg-transparent outline-none text-white px-3 py-2 rounded-lg"></textarea>
 
                     <label htmlFor="price" className="py-2 mt-4">Price <span className="text-red-500">*</span></label>
-                    <input type="text" id="price" name="price" required placeholder="eg: 350000 Rs." value={formdata.price} onChange={handleChange} className="border-2 border-gray-500 bg-transparent outline-none text-white px-3 py-2 rounded-lg" />
+                    <input type="text" id="price" name="price" required placeholder="eg: 80 Rs per KG" value={formdata.price} onChange={handleChange} className="border-2 border-gray-500 bg-transparent outline-none text-white px-3 py-2 rounded-lg" />
 
-                    <select name="perArea" required value={formdata.perArea} onChange={handleChange} className="px-3 py-2 mt-2 bg-transparent text-white border-2 border-zinc-600 rounded-lg outline-none">
-                        <option value="" className="text-black">Select--</option>
-                        {PerArea.map((m) => (
-                            <option key={m} value={m} className="px-4 py-1 text-black">{m}</option>
-                        ))}
-                    </select>
+                    <label htmlFor="quantity" className="py-2">Quantity of Fruit</label>
+                    <input type="text" id="quantity" name="quantity" placeholder="eg: 50 Kg" value={formdata.quantity} onChange={handleChange} className="border-2 border-gray-500 bg-transparent outline-none text-white px-3 py-2 rounded-lg" />
 
-                    <label htmlFor="image" className="py-2 mt-4">Photo of Field <span className="text-red-500">*</span></label>
-                    <input type="file" id="image" name="photo" required onChange={handleChange} className="border-2 border-gray-500 bg-transparent outline-none text-white px-3 py-2 rounded-lg" />
+                    <label htmlFor="image" className="py-2 mt-4">Photo of Fruit<span className="text-red-500">*</span></label>
+                    <input type="file" id="image" name="photo" onChange={handleChange} className="border-2 border-gray-500 bg-transparent outline-none text-white px-3 py-2 rounded-lg" />
 
                     {/* Retrieving States */}
                     <label htmlFor="state" className="py-2 mt-4">State <span className="text-red-500">*</span></label>
@@ -169,4 +154,4 @@ function AddField(){
     )
 }
 
-export default AddField;
+export default AddFruit;

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { GiHamburgerMenu } from "react-icons/gi";
+import { GiHamburgerMenu, GiTomato, GiPalmTree, GiWheat   } from "react-icons/gi";
 import { AiOutlinePlus } from "react-icons/ai";
-import { FaTractor, FaSeedling, FaBox } from "react-icons/fa";
+import { FaTractor, FaAppleAlt } from "react-icons/fa";
 import { FcGlobe } from "react-icons/fc";
 import { PiCow } from "react-icons/pi";
 import { TbCrop54 } from "react-icons/tb";
+import { IoSettings } from "react-icons/io5";
+import { LiaCottonBureau } from "react-icons/lia";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Cookies from 'universal-cookie';
@@ -26,16 +28,26 @@ function HomePage() {
 
   const categories = [
     {name: 'Machine', icon: '🚜'},
-    {name: 'Crop', icon: '🌱'},
+    {name: 'Crop', icon: '🌾'},
     {name: 'Animal', icon: '🐄'},
-    {name: 'Field', icon: <FcGlobe/>},
+    {name: 'Field', icon: <TbCrop54/>},
+    {name: 'Fertilizer', icon: <LiaCottonBureau/>},
+    {name: 'Fruit', icon: '🍌'},
+    {name: 'Vegetable', icon: '🍅'},
+    {name: 'Plant', icon: '🌿'},
+    {name: 'Other', icon: <IoSettings/>},
   ]
 
   const addItem = [
     {icon: <FaTractor size={20} />, title: 'Add Machine', name: 'machine'},
-    {icon: <FaSeedling size={20} />, title: 'Add Crop', name: 'crop'},
+    {icon: <GiWheat  size={20} />, title: 'Add Crop', name: 'crop'},
     {icon: <PiCow size={20} />, title: 'Add Animal', name: 'animal'},
     {icon: <TbCrop54 size={20} />, title: 'Add Field', name: 'field'},
+    {icon: <LiaCottonBureau size={20} />, title: 'Add Fertilizer', name: 'fertilizer'},
+    {icon: <FaAppleAlt size={20} />, title: 'Add Fruit', name: 'fruit'},
+    {icon: <GiTomato size={20} />, title: 'Add Vegetable', name: 'vegetable'},
+    {icon: <GiPalmTree  size={20} />, title: 'Add Plant', name: 'plant'},
+    {icon: <IoSettings size={20} />, title: 'Add Other', name: 'other'},
   ]
 
   const [showFilter, setShowFilter] = useState(false);
@@ -46,9 +58,14 @@ function HomePage() {
     setShowFilter(!showFilter);
   };
 
-  const machineCategories = ["Tractor", "Trolly", "Cultivator", "Seeddril", "Bike", "Rottervator", "Labeler", "Other Accessories"]
-  const cropCategories = ["Wheat", "Soyabean", "Paddy", "Jwar", "Bajra", "Mustard", "Corn", "Gram", "Moong", "Urad", "Other"]
-  const animalCategories = ["Cow", "Buffalo", "Goat", "Sheep", "Horse", "OX", "Donkey"]
+  const machineCategory = ["Tractor", "Trolly", "Cultivator", "Seeddril", "Bike", "Rottervator", "Labeler", "Other"]
+  const cropCategory = ["Wheat", "Soyabean", "Paddy", "Jwar", "Bajra", "Mustard", "Corn", "Gram", "Moong", "Urad", "Other"]
+  const animalCategory= ["Cow", "Buffalo", "Goat", "Sheep", "Horse", "OX", "Other"]
+  const fieldCategory = ["For Sale", "For Rent"]
+  const fertilizerCategory = ["Urea", "DAP", "Phosphorus", "Sulphur", "Organic", "Other"]
+  const fruitCategory = ["Apple", "Mango", "Banana", "Papaya", "Grapes", "Guava", "Other"]
+  const vegetableCategory = ["Potato", "Tomato", "Onion", "Ginger", "Carrot", "Other"]
+  const plantCategory = ["Normal", "Medicinal", "Valuable"]
 
   // Fetch All items based on the category
   const [items, setItems] = useState([]);
@@ -93,7 +110,7 @@ function HomePage() {
 
   // Filter the items based on item category and address
   const filteredItems = items.filter((item) => {
-    if (category !== "field" && selectedCategory && item.category !== selectedCategory) return false;
+    if (selectedCategory && item.category !== selectedCategory) return false;
     if (selectedState && item.state !== selectedState) return false;
     if (selectedDistrict && item.district !== selectedDistrict) return false;
     return true;
@@ -127,29 +144,50 @@ function HomePage() {
         {/* Filter Dropdown */}
         {showFilter && (
           <div className="absolute top-12 right-4 bg-zinc-700 shadow-md p-4 rounded-md w-48">
-            {category !== 'field' && (
-            <>
               <label className="block text-sm font-semibold">Category:</label>
               <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)} className="w-full bg-zinc-600 p-1 border-2 border-gray-400 outline-none rounded-md mt-1">
                 <option value="">All</option>
                 {category === 'machine' && (
-                  machineCategories.map((cat) => (
+                  machineCategory.map((cat) => (
                     <option key={cat} value={cat}>{cat}</option>
                   ))
                 )}
                 {category === 'crop' && (
-                  cropCategories.map((cat) => (
+                  cropCategory.map((cat) => (
                     <option key={cat} value={cat}>{cat}</option>
                   ))
                 )}
                 {category === 'animal' && (
-                  animalCategories.map((cat) => (
+                  animalCategory.map((cat) => (
+                    <option key={cat} value={cat}>{cat}</option>
+                  ))
+                )}
+                {category === 'field' && (
+                  fieldCategory.map((cat) => (
+                    <option key={cat} value={cat}>{cat}</option>
+                  ))
+                )}
+                {category === 'fertilizer' && (
+                  fertilizerCategory.map((cat) => (
+                    <option key={cat} value={cat}>{cat}</option>
+                  ))
+                )}
+                {category === 'fruit' && (
+                  fruitCategory.map((cat) => (
+                    <option key={cat} value={cat}>{cat}</option>
+                  ))
+                )}
+                {category === 'vegetable' && (
+                  vegetableCategory.map((cat) => (
+                    <option key={cat} value={cat}>{cat}</option>
+                  ))
+                )}
+                {category === 'plant' && (
+                  plantCategory.map((cat) => (
                     <option key={cat} value={cat}>{cat}</option>
                   ))
                 )}
               </select>
-            </>
-            )}
 
             <label className="block text-sm font-semibold mt-2">State:</label>
             <select value={selectedState} onChange={(e) => setSelectedState(e.target.value)} className="w-full bg-zinc-600 p-1 border-2 border-gray-400 outline-none rounded-md mt-1">
@@ -199,6 +237,7 @@ function HomePage() {
                     <div>
                       <h1 className="font-bold text-lg">{item.userName}</h1>
                       <p className="text-sm text-gray-300">{item.userAddress}</p>
+                      <div className="text-[12px] text-green-500 font-bold">Added : {new Date(parseInt(item._id.substring(0,8),16)*1000).toLocaleDateString()}</div>
                     </div>
                   </div>
                   <hr className="my-4 border-gray-600" />
@@ -211,6 +250,7 @@ function HomePage() {
                       <div className="border-2 border-gray-400 rounded-md my-2">
                         <p className="font-bold text-green-400 px-4 py-2">{item.price}</p>
                       </div>
+                      {item.quantity && (<div className="text-gray-400 text-sm"><span className="font-bold">Quantity : </span>{item.quantity}</div>)}
                       <p className="text-gray-200 "><span className="text-gray-400 font-bold">Address : </span>{item.place}, {item.district}, {item.state}</p>
                     </div>
                     <div className="lg:w-48 h-36 flex-shrink-0 overflow-hidden rounded-lg bg-gray-600 flex justify-center items-center">
@@ -221,9 +261,20 @@ function HomePage() {
                   {/* Action Button */}
                   <button className="mt-4 px-6 py-2 rounded-lg bg-green-600 hover:bg-green-500 transition"
                     onClick={() => {
-                      cookies.set('itemId', item._id)
-                      cookies.set('category', category)
-                      navigate(`/showItem`)
+                      if(cookies.get('token')){
+                        cookies.set('itemId', item._id)
+                        cookies.set('category', category)
+                        navigate(`/showItem`)
+                      }
+                      else{
+                        toast.warn("login to see Item"),{
+                          autoClose: 1500,
+                          position: 'bottom-right',
+                          closeOnClick: true,
+                          pauseOnHover: false,
+                          theme: 'colored'
+                        }
+                      }
                     }}  
                   >
                     Interested
@@ -265,7 +316,7 @@ function HomePage() {
               {addItem.map((item) => (
                 <div 
                 key={item.title} 
-                className="w-10 h-10 flex justify-center items-center flex-shrink-0 bg-green-600 rounded-full hover:bg-green-500 cursor-pointer" 
+                className="w-10 h-10 overflow-hidden flex justify-center items-center flex-shrink-0 rounded-full hover:bg-green-500 cursor-pointer" 
                 title={item.title}
                 onClick={() => {
                   navigate(`/add/${item.name}`)

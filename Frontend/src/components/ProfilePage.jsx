@@ -161,6 +161,12 @@ const ProfilePage = () => {
         })
     }
 
+    // when clicked on any item
+    const handleClickOnItem = (itemID,itemDomain) => {
+        cookies.set('itemId', itemID)
+        cookies.set('category', itemDomain)
+        navigate(`/showItem`)
+    }
 
     return (
         <>
@@ -176,8 +182,8 @@ const ProfilePage = () => {
                 {menuOpen && (
                 <div className="absolute top-12 left-4 bg-gray-800 p-2 rounded-md border border-white">
                     {/* <button className="block w-full text-left px-4 py-1 font-bold hover:bg-gray-700" onClick={() => navigate('/editAccount', {state: {from: '/profile'}})}>Edit</button> */}
-                    <button className="block w-full text-left px-4 py-1 font-bold hover:bg-gray-700" onClick={() => handleDelete()}>Delete</button>
                     <button className="block w-full text-left px-4 py-1 text-red-500 font-bold hover:underline" onClick={handleLogout}>Logout</button>
+                    <button className="block w-full text-left px-4 py-1 font-bold hover:bg-gray-700" onClick={() => handleDelete()}>Delete Account</button>
                 </div>
                 )}
 
@@ -209,9 +215,9 @@ const ProfilePage = () => {
                         <div className="mt-2">
                             {savedItems.length > 0 ? (
                             [...savedItems].reverse().map((item) => (
-                                <div key={item._id} className="text-gray-300 border-t border-gray-700 px-2 py-4 flex justify-between items-center">
+                                <div key={item._id} onClick={() => handleClickOnItem(item._id,item.domain)} className="text-gray-300 border-t border-gray-700 px-2 py-4 flex justify-between items-center cursor-pointer">
                                     <div className="flex items-center gap-4">
-                                        <div className="w-24 h-16 rounded-md overflow-hidden">
+                                        <div className="w-24 h-16 flex-shrink-0 rounded-md overflow-hidden">
                                             <img src={item.image} className="w-full h-full object-cover" />
                                         </div>
                                         <div className="flex flex-col">
@@ -241,9 +247,9 @@ const ProfilePage = () => {
                         <div className="mt-2">
                             {userItems.length > 0 ? (
                             [...userItems].reverse().map((item) => (
-                                <div key={item._id} className="text-gray-300 border-t border-gray-700 px-2 py-4 flex justify-between items-center">
+                                <div key={item._id} onClick={() => handleClickOnItem(item._id,item.domain)} className="text-gray-300 border-t border-gray-700 px-2 py-4 flex justify-between items-center cursor-pointer">
                                     <div className="flex items-center gap-4">
-                                        <div className="w-24 h-16 rounded-md overflow-hidden">
+                                        <div className="w-24 h-16 flex-shrink-0 rounded-md overflow-hidden">
                                             <img src={item.image} className="w-full h-full object-cover" />
                                         </div>
                                         <div className="flex flex-col">

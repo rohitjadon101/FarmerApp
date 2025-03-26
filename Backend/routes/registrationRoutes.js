@@ -10,6 +10,11 @@ const machine = require('../models/machine');
 const crop = require('../models/crop');
 const animal = require('../models/animal');
 const field = require('../models/field');
+const fertilizer = require('../models/fertilizer');
+const fruit = require('../models/fruit');
+const vegetable = require('../models/vegetable');
+const plant = require('../models/plant');
+const other = require('../models/other');
 
 dotenv.config();
 
@@ -122,6 +127,11 @@ router.delete('/removeAccount', async (req, res) => {
         await crop.deleteMany({userEmail: newUser.email});
         await animal.deleteMany({userEmail: newUser.email});
         await field.deleteMany({userEmail: newUser.email});
+        await fertilizer.deleteMany({userEmail: newUser.email});
+        await fruit.deleteMany({userEmail: newUser.email});
+        await vegetable.deleteMany({userEmail: newUser.email});
+        await plant.deleteMany({userEmail: newUser.email});
+        await other.deleteMany({userEmail: newUser.email});
 
         await user.findByIdAndDelete(userID);
         res.status(200).json({message: "account removed successfully"})

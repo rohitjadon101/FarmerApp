@@ -10,6 +10,11 @@ import AddAnimal from "./addItems/AddAnimal";
 import AddField from "./addItems/AddField";
 import ShowItem from "./addItems/ShowItem";
 import EditAccount from "./components/EditAccount";
+import AddFertilizer from "./addItems/AddFertilizer";
+import AddFruit from "./addItems/AddFruit";
+import AddVegetable from "./addItems/AddVegetable";
+import AddPlant from "./addItems/AddPlant";
+import AddOther from "./addItems/AddOther";
 
 function App() {
 
@@ -26,6 +31,11 @@ function App() {
         <Route path="/add/crop" element={<AddCrop />} />
         <Route path="/add/animal" element={<AddAnimal />} />
         <Route path="/add/field" element={<AddField />} />
+        <Route path="/add/fertilizer" element={<AddFertilizer />} />
+        <Route path="/add/fruit" element={<AddFruit />} />
+        <Route path="/add/vegetable" element={<AddVegetable />} />
+        <Route path="/add/plant" element={<AddPlant />} />
+        <Route path="/add/other" element={<AddOther />} />
         <Route path="/showItem" element={<ShowItem />} />
       </Routes>
     </Router>

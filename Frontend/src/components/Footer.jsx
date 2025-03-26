@@ -16,7 +16,7 @@ const Footer = () => {
       <div>
         <h5 className="text-center text-green-600 font-bold text-lg">FarmerApp</h5>
         <p className="text-center text-gray-400">
-          FarmerApp is dedicated to Farmers where they can buy or sell their Items easily from Home.
+          FarmerApp is dedicated to Farmers where they can buy or sell their Items easily from anywhere.
         </p>
       </div>
       <p className="text-center text-gray-500 pt-2">All Rights Reserved ©2025</p>
