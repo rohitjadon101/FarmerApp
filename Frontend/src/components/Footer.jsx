@@ -5,7 +5,7 @@ import { FaLinkedinIn, FaGithub  } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="bg-zinc-800 text-white py-3 px-4">
+    <footer className="bg-zinc-800 text-white sm:py-3 py-6 px-4">
       <ul className="flex justify-center gap-6">
         <li className="hover:scale-110 hover:text-blue-400"><a href="#" className="px-2"><LuInstagram /></a></li>
         <li className="hover:scale-110 hover:text-blue-400"><a href="#" className="px-2"><FaMeta /></a></li>

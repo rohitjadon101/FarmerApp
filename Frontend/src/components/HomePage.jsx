@@ -118,7 +118,7 @@ function HomePage() {
   
 
   return (
-    <div className="bg-[#1a1e21] text-white min-h-screen flex">
+    <div className="bg-[#1a1e21] text-white min-h-screen flex p-4">
       {/* Sidebar */}
       <aside className={`min-h-full bg-[#3f474d] flex flex-col items-center py-6 transition-all duration-300`}>
         <div className="flex flex-col items-center gap-5 overflow-y-auto px-1">
