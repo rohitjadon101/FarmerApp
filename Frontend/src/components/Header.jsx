@@ -11,7 +11,7 @@ function Header() {
 
   return (
     <>
-    <header className="flex justify-between items-center text-white bg-gradient-to-bl from-zinc-800 to-zinc-700 px-2 sm:px-20 sm:py-5 py-16 shadow-lg">
+    <header className="flex justify-between items-center text-white bg-gradient-to-bl from-zinc-800 to-zinc-700 px-2 sm:px-20 py-5 shadow-lg">
       {/* Logo and Title */}
       <div className="flex items-center gap-3">
         <img src="https://img.lovepik.com/element/40027/9039.png_860.png" className="w-8 h-8 sm:w-10 sm:h-10 rounded-full"/>

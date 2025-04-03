@@ -170,7 +170,7 @@ const ProfilePage = () => {
 
     return (
         <>
-        <div className="w-full min-h-screen bg-zinc-800 text-white px-4 py-10 border-b-2 border-b-zinc-700">
+        <div className="w-full min-h-screen bg-zinc-800 text-white p-4 pb-10 border-b-2 border-b-zinc-700">
             <div className="relative">
 
                 {/* Toggle Button for Sidebar */}
