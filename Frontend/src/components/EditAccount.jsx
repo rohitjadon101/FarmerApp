@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useContext } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import data from '../Api/stateDistrict';
 import { useNavigate } from 'react-router-dom';
 import Cookies from "universal-cookie";
+import { UserContext } from "../context/UserContext";
 const cookies = new Cookies();
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 function EditAccount(){
     const navigate = useNavigate();
 
-    let token = cookies.get('token');
-    let user = cookies.get('user');
+    const token = cookies.get('token');
+    const {user} = useContext(UserContext);
+
     if(!token || !user){
         navigate('/')
         return;

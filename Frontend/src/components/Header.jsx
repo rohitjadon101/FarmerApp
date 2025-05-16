@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaHome, FaSignInAlt } from "react-icons/fa";
 import Cookies from "universal-cookie";
+import { UserContext } from "../context/UserContext";
 const cookies = new Cookies();
 
 function Header() {
   const navigate = useNavigate();
-
-  let user = cookies.get('user') || null;
+  const {user} = useContext(UserContext);
 
   return (
     <>

@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Cookies from "universal-cookie";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 const cookies = new Cookies();
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 function ShowItem(){
     const navigate = useNavigate();
 
-    let token = cookies.get('token');
-    let user = cookies.get('user') || null;
+    const token = cookies.get('token');
+    const {user} = useContext(UserContext);
     useEffect(() => {
       if(!token){
         navigate('/login');

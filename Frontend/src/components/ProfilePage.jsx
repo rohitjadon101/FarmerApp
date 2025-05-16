@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaBars, FaTimes, FaHome } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
@@ -7,18 +7,19 @@ import 'react-toastify/dist/ReactToastify.css';
 import Swal from 'sweetalert2';
 import Cookies from "universal-cookie";
 import Footer from "./Footer";
+import { UserContext } from "../context/UserContext";
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 const cookies = new Cookies();
 
 const ProfilePage = () => {
     const navigate = useNavigate();
 
-    let token = cookies.get('token');
+    const token = cookies.get('token');
     if(!token){
         navigate('/')
         return;
     }
-    let user = cookies.get('user') || null;
+    const {user} = useContext(UserContext);
 
     const [menuOpen, setMenuOpen] = useState(false);
     const [savedItems, setSavedItems] = useState([]);

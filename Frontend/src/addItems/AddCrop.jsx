@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Cookies from "universal-cookie";
 import data from '../Api/stateDistrict';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
+import { UserContext } from "../context/UserContext";
 const cookies = new Cookies();
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -15,7 +16,7 @@ function AddCrop(){
         navigate('/login');
         return;
     }
-    let user = cookies.get('user');
+    const {user} = useContext(UserContext);
 
     const [formdata, setFormdata] = useState({name: '', description: '', price: '', measure: '', photo: '', cropCategory: '', state: '', district: '', place: '' })
     const handleChange = (e) => {

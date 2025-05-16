@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Cookies from 'universal-cookie';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
+import { UserContext } from "../context/UserContext";
 const cookies = new Cookies();
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 function LoginPage(){
     const navigate = useNavigate();
+    const {setUser} = useContext(UserContext);
 
     const [formdata, setFormData] = useState({email: '',password: ''});
 
@@ -30,7 +32,7 @@ function LoginPage(){
 
           if(data.token){
             cookies.set('token', data.token);
-            cookies.set('user', data.foundUser);
+            setUser(data.foundUser);
             toast.success("login succcessFully",{
               onClose: () => {
                 navigate('/')
