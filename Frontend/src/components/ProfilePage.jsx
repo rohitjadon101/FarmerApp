@@ -13,12 +13,12 @@ const cookies = new Cookies();
 const ProfilePage = () => {
     const navigate = useNavigate();
 
-    const token = cookies.get('token');
+    let token = cookies.get('token');
     if(!token){
         navigate('/')
         return;
     }
-    const user = cookies.get('user') || null;
+    let user = cookies.get('user') || null;
 
     const [menuOpen, setMenuOpen] = useState(false);
     const [savedItems, setSavedItems] = useState([]);

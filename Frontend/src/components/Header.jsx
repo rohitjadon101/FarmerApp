@@ -7,7 +7,7 @@ const cookies = new Cookies();
 function Header() {
   const navigate = useNavigate();
 
-  const user = cookies.get('user') || null;
+  let user = cookies.get('user') || null;
 
   return (
     <>

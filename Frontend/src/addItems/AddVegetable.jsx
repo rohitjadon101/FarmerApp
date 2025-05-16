@@ -15,7 +15,7 @@ function AddVegetable(){
         navigate('/login');
         return;
     }
-    const user = cookies.get('user');
+    let user = cookies.get('user');
 
     const [formdata, setFormdata] = useState({vegetableCategory: '',name: '', description: '', price: '', quantity: '', photo: '', state: '', district: '', place: ''})
     const handleChange = (e) => {

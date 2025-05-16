@@ -15,7 +15,7 @@ function AddField(){
         navigate('/login');
         return;
     }
-    const user = cookies.get('user');
+    let user = cookies.get('user');
 
     const [formdata, setFormdata] = useState({fieldCategory: '',measure: '', area: '', description: '', price: '', perArea: '', photo: '', state: '', district: '', place: '' })
     const handleChange = (e) => {

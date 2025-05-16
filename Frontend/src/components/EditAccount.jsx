@@ -10,8 +10,8 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
 function EditAccount(){
     const navigate = useNavigate();
 
-    const token = cookies.get('token');
-    const user = cookies.get('user');
+    let token = cookies.get('token');
+    let user = cookies.get('user');
     if(!token || !user){
         navigate('/')
         return;

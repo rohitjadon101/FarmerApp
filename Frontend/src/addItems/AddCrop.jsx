@@ -15,7 +15,7 @@ function AddCrop(){
         navigate('/login');
         return;
     }
-    const user = cookies.get('user');
+    let user = cookies.get('user');
 
     const [formdata, setFormdata] = useState({name: '', description: '', price: '', measure: '', photo: '', cropCategory: '', state: '', district: '', place: '' })
     const handleChange = (e) => {

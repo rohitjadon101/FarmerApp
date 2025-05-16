@@ -11,16 +11,16 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
 function ShowItem(){
     const navigate = useNavigate();
 
-    const token = cookies.get('token');
-    const user = cookies.get('user') || null;
+    let token = cookies.get('token');
+    let user = cookies.get('user') || null;
     useEffect(() => {
       if(!token){
         navigate('/login');
         return;
       }
     }, [token]);
-    const itemId = cookies.get('itemId') || null;
-    const category = cookies.get('category');
+    let itemId = cookies.get('itemId') || null;
+    let category = cookies.get('category');
 
     const [item, setItem] = useState();
     useEffect(() => {
