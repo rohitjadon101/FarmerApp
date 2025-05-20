@@ -14,10 +14,12 @@ function EditAccount(){
     const token = cookies.get('token');
     const {user} = useContext(UserContext);
 
-    if(!token || !user){
-        navigate('/')
-        return;
-    }
+    useEffect(() => {
+        if (!token || !user) {
+            navigate('/');
+        }
+    }, [token, user]);
+
 
     const [formdata, setFormdata] = useState({
         name: user.name,
@@ -59,37 +61,87 @@ function EditAccount(){
         }
     }
 
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+
+    //     const formData = new FormData();
+    //     Object.keys(formdata).forEach((key) => {
+    //         formData.append(key, formdata[key]);
+    //     });
+
+    //     await fetch(`${backendUrl}/editAccount/${user._id}`, {
+    //         method: 'PUT',
+    //         body: formData
+    //     }).then(async (res) => {
+    //         const result = await res.json();
+    //         if(res.ok){
+    //             toast.success("Account edited successfully!",{
+    //                 onClose: () => {
+    //                     navigate('/profile')
+    //                 },
+    //                 autoClose: 2000,
+    //                 position: 'bottom-right',
+    //                 closeOnClick: true,
+    //                 pauseOnHover: false,
+    //                 theme: 'colored'
+    //             })
+    //         }else{
+    //             toast.warn(result.message,{autoClose: 1500, pauseOnHover: false, closeOnClick: true, position: 'bottom-right', theme: 'colored'})
+    //         }
+    //     }).catch((err) => {
+    //         toast.error("Network Error",{autoClose: 1500, pauseOnHover: false, closeOnClick: true, position: 'bottom-right', theme: 'colored'})
+    //     });
+    // };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const formData = new FormData();
+        const formDataToSend = new FormData();
         Object.keys(formdata).forEach((key) => {
-            formData.append(key, formdata[key]);
+            formDataToSend.append(key, formdata[key]);
         });
 
-        await fetch(`${backendUrl}/editAccount/${user._id}`, {
-            method: 'PUT',
-            body: formData
-        }).then(async (res) => {
+        try {
+            const res = await fetch(`${backendUrl}/editAccount/${user._id}`, {
+                method: 'PUT',
+                body: formDataToSend
+            });
+
             const result = await res.json();
-            if(res.ok){
-                toast.success("Account edited successfully!",{
-                    onClose: () => {
-                        navigate('/profile')
-                    },
+
+            if (res.ok) {
+                // Update cookie and context
+                const updatedUser = result.updatedUser || result.user || result;
+                cookies.set('user', updatedUser, { path: '/' });
+
+                // Optional: Force reload or redirect
+                toast.success("Account edited successfully!", {
+                    onClose: () => navigate('/profile'),
                     autoClose: 2000,
                     position: 'bottom-right',
                     closeOnClick: true,
                     pauseOnHover: false,
                     theme: 'colored'
-                })
-            }else{
-                toast.warn(result.message,{autoClose: 1500, pauseOnHover: false, closeOnClick: true, position: 'bottom-right', theme: 'colored'})
+                });
+            } else {
+                toast.warn(result.message || "Something went wrong", {
+                    autoClose: 1500,
+                    pauseOnHover: false,
+                    closeOnClick: true,
+                    position: 'bottom-right',
+                    theme: 'colored'
+                });
             }
-        }).catch((err) => {
-            toast.error("Network Error",{autoClose: 1500, pauseOnHover: false, closeOnClick: true, position: 'bottom-right', theme: 'colored'})
-        });
-    };
+        } catch (err) {
+            toast.error("Server error", {
+                autoClose: 1500,
+                pauseOnHover: false,
+                closeOnClick: true,
+                position: 'bottom-right',
+                theme: 'colored'
+            });
+        }
+    }
 
     return (
         <div className="bg-zinc-800 min-h-screen text-white flex justify-center items-center py-4 sm:py-10">

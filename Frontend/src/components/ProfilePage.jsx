@@ -15,10 +15,12 @@ const ProfilePage = () => {
     const navigate = useNavigate();
 
     const token = cookies.get('token');
-    if(!token){
-        navigate('/')
-        return;
-    }
+    useEffect(() => {
+        if (!token) {
+            navigate('/');
+        }
+    }, [token]);
+
     const {user} = useContext(UserContext);
 
     const [menuOpen, setMenuOpen] = useState(false);
@@ -26,24 +28,25 @@ const ProfilePage = () => {
     const [userItems, setUserItems] = useState([]);
     const [savedOpen, setSavedOpen] = useState(false);
     const [userOpen, setUserOpen] = useState(false);
-  
-    if(user){
-        // Fetch saved items
-        useEffect(() => {
-          fetch(`${backendURL}/savedItems/${user._id}`)
+
+    // Fetch saved items
+    useEffect(() => {
+        if (user) {
+            fetch(`${backendURL}/savedItems/${user._id}`)
             .then((res) => res.json())
             .then((data) => setSavedItems(data))
             .catch((err) => console.error(err));
-        }, []);
-      
-        // Fetch user-added items
-        useEffect(() => {
-          fetch(`${backendURL}/userItems/${user._id}`)
+        }
+    }, [user]);
+    // Fetch user-added items
+    useEffect(() => {
+        if (user) {
+            fetch(`${backendURL}/userItems/${user._id}`)
             .then((res) => res.json())
             .then((data) => setUserItems(data))
             .catch((err) => console.error(err));
-        }, []);
-    }
+        }
+    }, [user]);
 
     // Remove From Cart
     const removeFromCart = (itemID) => {
@@ -182,7 +185,7 @@ const ProfilePage = () => {
                 {/* Sidebar Menu */}
                 {menuOpen && (
                 <div className="absolute top-12 left-4 bg-gray-800 p-2 rounded-md border border-white">
-                    {/* <button className="block w-full text-left px-4 py-1 font-bold hover:bg-gray-700" onClick={() => navigate('/editAccount', {state: {from: '/profile'}})}>Edit</button> */}
+                    <button className="block w-full text-left px-4 py-1 font-bold hover:bg-gray-700" onClick={() => navigate('/editAccount', {state: {from: '/profile'}})}>Edit</button>
                     <button className="block w-full text-left px-4 py-1 text-red-500 font-bold hover:underline" onClick={handleLogout}>Logout</button>
                     <button className="block w-full text-left px-4 py-1 font-bold hover:bg-gray-700" onClick={() => handleDelete()}>Delete Account</button>
                 </div>

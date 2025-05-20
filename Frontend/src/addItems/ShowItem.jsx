@@ -20,6 +20,7 @@ function ShowItem(){
         return;
       }
     }, [token]);
+    
     let itemId = cookies.get('itemId') || null;
     let category = cookies.get('category');
 
