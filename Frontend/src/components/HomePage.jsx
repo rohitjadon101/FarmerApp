@@ -214,7 +214,7 @@ function HomePage() {
         )}
 
         {loading ? (
-          <div className="py-10 flex justify-center items-center">
+          <div className="py-10 flex flex-col justify-center items-center">
             <ClipLoader 
               color="#5ad356"
               loading={loading}
@@ -222,6 +222,7 @@ function HomePage() {
               aria-label="Loading Spinner"
               data-testid="loader"
             />
+            <h1>Please wait, while we are loading Items.....</h1>
           </div>
         ) : (
           <section className="flex flex-col items-center py-2 lg:py-10 gap-8">
