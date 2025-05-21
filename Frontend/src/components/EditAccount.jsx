@@ -5,6 +5,7 @@ import data from '../Api/stateDistrict';
 import { useNavigate } from 'react-router-dom';
 import Cookies from "universal-cookie";
 import { UserContext } from "../context/UserContext";
+import ClipLoader from "react-spinners/ClipLoader";
 const cookies = new Cookies();
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -31,27 +32,6 @@ function EditAccount(){
         village: user.village,
     });
 
-    // const [formdata, setFormdata] = useState({
-    //     name: '',
-    //     email: '',
-    //     contact: '',
-    //     photo: '',
-    //     state: '',
-    //     district: '',
-    //     village: '',
-    // });
-
-    // if(user){
-    //     useEffect(() => {
-    //         fetch(`${backendUrl}/getUser/${user._id}`)
-    //         .then((res) => res.json())
-    //         .then((data) => {
-    //             setFormdata({name: data.name, email: data.email, contact: data.contact, photo: data.profile, state: data.state, district: data.district, village: data.village})
-    //         })
-    //         .catch((error) => console.log("something went wrong!"))
-    //     }, [user])
-    // }
-
     const handleChange = (e) => {
         if(e.target.type === 'file'){
             setFormdata({...formdata, [e.target.name]: e.target.files[0]})
@@ -60,38 +40,6 @@ function EditAccount(){
             setFormdata({...formdata, [e.target.name]: e.target.value})
         }
     }
-
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-
-    //     const formData = new FormData();
-    //     Object.keys(formdata).forEach((key) => {
-    //         formData.append(key, formdata[key]);
-    //     });
-
-    //     await fetch(`${backendUrl}/editAccount/${user._id}`, {
-    //         method: 'PUT',
-    //         body: formData
-    //     }).then(async (res) => {
-    //         const result = await res.json();
-    //         if(res.ok){
-    //             toast.success("Account edited successfully!",{
-    //                 onClose: () => {
-    //                     navigate('/profile')
-    //                 },
-    //                 autoClose: 2000,
-    //                 position: 'bottom-right',
-    //                 closeOnClick: true,
-    //                 pauseOnHover: false,
-    //                 theme: 'colored'
-    //             })
-    //         }else{
-    //             toast.warn(result.message,{autoClose: 1500, pauseOnHover: false, closeOnClick: true, position: 'bottom-right', theme: 'colored'})
-    //         }
-    //     }).catch((err) => {
-    //         toast.error("Network Error",{autoClose: 1500, pauseOnHover: false, closeOnClick: true, position: 'bottom-right', theme: 'colored'})
-    //     });
-    // };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -111,7 +59,7 @@ function EditAccount(){
 
             if (res.ok) {
                 // Update cookie and context
-                const updatedUser = result.updatedUser || result.user || result;
+                const updatedUser = result.updatedUser;
                 cookies.set('user', updatedUser, { path: '/' });
 
                 // Optional: Force reload or redirect
@@ -142,6 +90,8 @@ function EditAccount(){
             });
         }
     }
+
+    const [loading, setLoading] = useState(false);
 
     return (
         <div className="bg-zinc-800 min-h-screen text-white flex justify-center items-center py-4 sm:py-10">
@@ -189,7 +139,18 @@ function EditAccount(){
                     <label htmlFor="place" className="py-2 mt-4">Village or Street</label>
                     <input type="text" id="place" name="village" value={formdata.village} onChange={handleChange} className="border-2 border-gray-500 bg-transparent outline-none text-white px-3 py-2 rounded-lg" />
 
-                    <button>Save</button>
+                    <button className="px-4 py-2 text-green-500 font-bold text-xl hover:text-green-600 rounded-md w-fit self-center mt-4" onClick={() => setLoading(true)}>Save</button>
+                    {loading && (
+                    <div className="mt-2 flex justify-center items-center">
+                        <ClipLoader 
+                        color="#5ad356"
+                        loading={loading}
+                        size={30}
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
+                        />
+                    </div>
+                    )}
                 </form>
             </div>
         <ToastContainer />
