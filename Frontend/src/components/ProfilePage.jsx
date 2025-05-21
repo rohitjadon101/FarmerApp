@@ -21,7 +21,7 @@ const ProfilePage = () => {
         }
     }, [token]);
 
-    const {user} = useContext(UserContext);
+    const {user, setUser} = useContext(UserContext);
 
     const [menuOpen, setMenuOpen] = useState(false);
     const [savedItems, setSavedItems] = useState([]);
@@ -109,6 +109,7 @@ const ProfilePage = () => {
     const handleLogout = () => {
         cookies.remove('token');
         cookies.remove('user');
+        setUser(null);
         toast.success('Logged out!', {
             onClose: () => {
                 navigate('/');
@@ -144,6 +145,7 @@ const ProfilePage = () => {
                             onClose: () => {
                                 cookies.remove('token')
                                 cookies.remove('user')
+                                setUser(null);
                                 navigate('/')
                             },
                             autoClose: 1500,

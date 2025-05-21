@@ -28,8 +28,11 @@ function RegisterPage(){
         }
     }
 
+    const [loading, setLoading] = useState(false);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
 
         const formData = new FormData();
         Object.keys(formdata).forEach((key) => {
@@ -61,8 +64,6 @@ function RegisterPage(){
             toast.error("Network Error",{autoClose: 1500, pauseOnHover: false, closeOnClick: true, position: 'bottom-right', theme: 'colored'})
         });
     };
-
-    const [loading, setLoading] = useState(false);
 
     return (
         <div className="bg-zinc-800 min-h-screen w-full text-white flex justify-center items-center py-4 sm:py-10">
@@ -113,7 +114,7 @@ function RegisterPage(){
                     <label htmlFor="place" className="py-2 mt-4">Village or Street</label>
                     <input type="text" id="place" name="village" value={formdata.village} onChange={handleChange} className="border-2 border-gray-500 bg-transparent outline-none text-white px-3 py-2 rounded-lg" />
 
-                    <button className="px-4 py-2 text-green-500 font-bold text-xl hover:text-green-600 rounded-md w-fit self-center mt-4" onClick={() => setLoading(true)}>Save</button>
+                    <button className="px-4 py-2 text-green-500 font-bold text-xl hover:text-green-600 rounded-md w-fit self-center mt-4" onSubmit={handleSubmit}>Save</button>
                     {loading && (
                     <div className="mt-2 flex justify-center items-center">
                         <ClipLoader 

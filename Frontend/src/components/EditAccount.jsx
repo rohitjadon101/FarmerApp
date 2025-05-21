@@ -13,7 +13,7 @@ function EditAccount(){
     const navigate = useNavigate();
 
     const token = cookies.get('token');
-    const {user} = useContext(UserContext);
+    const {user, setUser} = useContext(UserContext);
 
     useEffect(() => {
         if (!token || !user) {
@@ -41,8 +41,11 @@ function EditAccount(){
         }
     }
 
+    const [loading, setLoading] = useState(false);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
 
         const formDataToSend = new FormData();
         Object.keys(formdata).forEach((key) => {
@@ -61,6 +64,7 @@ function EditAccount(){
                 // Update cookie and context
                 const updatedUser = result.updatedUser;
                 cookies.set('user', updatedUser, { path: '/' });
+                setUser(updatedUser);
 
                 // Optional: Force reload or redirect
                 toast.success("Account edited successfully!", {
@@ -91,8 +95,6 @@ function EditAccount(){
         }
     }
 
-    const [loading, setLoading] = useState(false);
-
     return (
         <div className="bg-zinc-800 min-h-screen text-white flex justify-center items-center py-4 sm:py-10">
             <div className="p-5 border-2 border-gray-400 rounded-lg w-[80%] sm:w-[40%]">
@@ -108,8 +110,8 @@ function EditAccount(){
                     <label htmlFor="contact" className="py-2">Mobile No.<span className="text-red-500">*</span></label>
                     <input type="text" id="contact" name="contact" required value={formdata.contact} onChange={handleChange} className="border-2 border-gray-500 bg-transparent outline-none text-white px-3 py-2 rounded-lg" />
 
-                    <label htmlFor="image" className="py-2 mt-4">Profile photo</label>
-                    <input type="file" id="image" name="photo" onChange={handleChange} className="border-2 border-gray-500 bg-transparent outline-none text-white px-3 py-2 rounded-lg" />
+                    <label htmlFor="image" className="py-2 mt-4">Profile photo<span className="text-red-500">*</span></label>
+                    <input type="file" id="image" name="photo" required onChange={handleChange} className="border-2 border-gray-500 bg-transparent outline-none text-white px-3 py-2 rounded-lg" />
 
                     {/* Retrieving States */}
                     <label htmlFor="state" className="py-2 mt-4">State <span className="text-red-500">*</span></label>
@@ -139,7 +141,7 @@ function EditAccount(){
                     <label htmlFor="place" className="py-2 mt-4">Village or Street</label>
                     <input type="text" id="place" name="village" value={formdata.village} onChange={handleChange} className="border-2 border-gray-500 bg-transparent outline-none text-white px-3 py-2 rounded-lg" />
 
-                    <button className="px-4 py-2 text-green-500 font-bold text-xl hover:text-green-600 rounded-md w-fit self-center mt-4" onClick={() => setLoading(true)}>Save</button>
+                    <button className="px-4 py-2 text-green-500 font-bold text-xl hover:text-green-600 rounded-md w-fit self-center mt-4" onSubmit={handleSubmit}>Save</button>
                     {loading && (
                     <div className="mt-2 flex justify-center items-center">
                         <ClipLoader 

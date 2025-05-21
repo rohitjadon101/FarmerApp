@@ -14,6 +14,7 @@ function ShowItem(){
 
     const token = cookies.get('token');
     const {user} = useContext(UserContext);
+    
     useEffect(() => {
       if(!token){
         navigate('/login');
