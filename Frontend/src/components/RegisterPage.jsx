@@ -32,6 +32,13 @@ function RegisterPage(){
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // For Otp verification
+        if (!otpVerified) {
+            toast.warn("Please verify your email OTP before submitting");
+            return;
+        }
+
         setLoading(true);
 
         const formData = new FormData();
@@ -65,6 +72,42 @@ function RegisterPage(){
         });
     };
 
+    // Otp Functionality is added------------------------------------------
+    const [otp, setOtp] = useState('');
+    const [otpSent, setOtpSent] = useState(false);
+    const [otpVerified, setOtpVerified] = useState(false);
+
+    const sendOtp = async () => {
+        const res = await fetch(`${backendUrl}/api/otp/send-otp`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ email: formdata.email })
+        });
+        const data = await res.json();
+        if (res.ok) {
+            setOtpSent(true);
+            toast.success("OTP sent to email");
+        } else {
+            toast.error(data.message);
+        }
+    };
+
+    const verifyOtp = async () => {
+        const res = await fetch(`${backendUrl}/api/otp/verify-otp`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ email: formdata.email, otp })
+        });
+        const data = await res.json();
+        if (res.ok) {
+            setOtpVerified(true);
+            toast.success("OTP Verified");
+        } else {
+            toast.error(data.message);
+        }
+    };
+    // -------------------------------------------------------------------
+
     return (
         <div className="bg-zinc-800 min-h-screen w-full text-white flex justify-center items-center py-4 sm:py-10">
             <div className="sm:p-5 sm:border-2 border-gray-400 rounded-lg w-[80%] sm:w-[40%]">
@@ -76,6 +119,20 @@ function RegisterPage(){
                     
                     <label htmlFor="email" className="py-2">Email<span className="text-red-500">*</span></label>
                     <input type="email" id="email" name="email" required placeholder="xyz@gmail.com" value={formdata.email} onChange={handleChange} className="border-2 border-gray-500 bg-transparent outline-none text-white px-3 py-2 rounded-lg" />
+
+                    {/* This is for Otp part */}
+                    {/* Send OTP Button */}
+                    {!otpSent && (
+                        <button type="button" onClick={sendOtp} className="mt-2 text-blue-400 underline w-fit">Send OTP</button>
+                    )}
+                    {/* OTP Input */}
+                    {otpSent && !otpVerified && (
+                        <>
+                            <label htmlFor="otp" className="py-2">Enter OTP sent to Email</label>
+                            <input type="text" id="otp" value={otp} onChange={(e) => setOtp(e.target.value)} className="border-2 ..." />
+                            <button type="button" onClick={verifyOtp} className="mt-2 text-green-400 underline w-fit">Verify OTP</button>
+                        </>
+                    )}
                     
                     <label htmlFor="password" className="py-2">password<span className="text-red-500">*</span></label>
                     <input type="password" id="password" name="password" required value={formdata.password} onChange={handleChange} className="border-2 border-gray-500 bg-transparent outline-none text-white px-3 py-2 rounded-lg" />

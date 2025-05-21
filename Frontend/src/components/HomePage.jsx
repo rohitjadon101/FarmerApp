@@ -317,7 +317,7 @@ function HomePage() {
               {addItem.map((item) => (
                 <div 
                 key={item.title} 
-                className="w-10 h-10 overflow-hidden flex justify-center items-center flex-shrink-0 rounded-full hover:bg-green-500 cursor-pointer" 
+                className="w-10 h-10 overflow-hidden flex justify-center items-center flex-shrink-0 rounded-full bg-zinc-600 hover:bg-green-500 cursor-pointer" 
                 title={item.title}
                 onClick={() => {
                   navigate(`/add/${item.name}`)

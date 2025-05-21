@@ -4,6 +4,7 @@ const connectDB = require('./config/db');
 const registrationRoutes = require('./routes/registrationRoutes');
 const itemRoutes = require('./routes/itemRoutes');
 const dotenv = require('dotenv');
+const otpRoutes = require('./routes/otp');
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use(cors({
 
 app.use(registrationRoutes);
 app.use(itemRoutes);
+app.use('/api/otp', otpRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`server running on Port ${PORT}`));
