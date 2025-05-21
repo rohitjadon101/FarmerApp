@@ -109,7 +109,6 @@ const ProfilePage = () => {
     const handleLogout = () => {
         cookies.remove('token');
         cookies.remove('user');
-        setUser(null);
         toast.success('Logged out!', {
             onClose: () => {
                 navigate('/');
