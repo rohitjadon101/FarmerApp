@@ -129,7 +129,7 @@ function RegisterPage(){
                     {otpSent && !otpVerified && (
                         <>
                             <label htmlFor="otp" className="py-2">Enter OTP sent to Email</label>
-                            <input type="text" id="otp" value={otp} onChange={(e) => setOtp(e.target.value)} className="border-2 ..." />
+                            <input type="text" id="otp" value={otp} onChange={(e) => setOtp(e.target.value)} className="border-2 border-gray-500 bg-transparent outline-none text-white px-3 py-2 rounded-lg" />
                             <button type="button" onClick={verifyOtp} className="mt-2 text-green-400 underline w-fit">Verify OTP</button>
                         </>
                     )}
