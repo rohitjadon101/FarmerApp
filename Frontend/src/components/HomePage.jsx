@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { GiHamburgerMenu, GiTomato, GiPalmTree, GiWheat   } from "react-icons/gi";
 import { AiOutlinePlus } from "react-icons/ai";
 import { FaTractor, FaAppleAlt } from "react-icons/fa";
-import { FcGlobe } from "react-icons/fc";
 import { PiCow } from "react-icons/pi";
 import { TbCrop54 } from "react-icons/tb";
 import { IoSettings } from "react-icons/io5";
@@ -248,6 +247,9 @@ function HomePage() {
                     <div className="flex flex-col items-start pl-2 lg:pl-10">
                       <h2 className="font-semibold text-xl">{item.firstField}</h2>
                       <p className="text-gray-400 text-sm">{item.description}</p>
+                      {item.domain === "field" && (
+                        <div className="py-2 font-bold text-green-500">{item.fieldCategory}</div>
+                      )}
                       <div className="border-2 border-gray-400 rounded-md my-2">
                         <p className="font-bold text-green-400 px-4 py-2">{item.price}</p>
                       </div>
