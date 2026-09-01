@@ -14,7 +14,7 @@ function Header() {
     <header className="flex justify-between items-center text-white bg-gradient-to-bl from-zinc-800 to-zinc-700 px-2 sm:px-20 py-5 shadow-lg">
       {/* Logo and Title */}
       <div className="flex items-center gap-3">
-        <img src="https://img.lovepik.com/element/40027/9039.png_860.png" className="w-8 h-8 sm:w-10 sm:h-10 rounded-full"/>
+        <img src="https://www.shutterstock.com/image-vector/indian-happy-farmer-logo-design-260nw-2375136601.jpg" className="w-8 h-8 sm:w-10 sm:h-10 rounded-full"/>
         <h1 className="font-extrabold text-xl sm:text-[25px] tracking-wide text-green-600">FarmerApp</h1>
       </div>
 
