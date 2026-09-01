@@ -10,7 +10,9 @@ const userSchema = mongoose.Schema({
     district: String,
     village: String,
     cart: [],
-    addedItem: []
+    addedItem: [],
+    interestedItems: [],
+    deals: [],
 })
 
 module.exports = mongoose.model('user', userSchema);
